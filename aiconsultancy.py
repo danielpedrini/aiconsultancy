@@ -1,4 +1,4 @@
-__version__ = '0.1.dev0'
+__version__ = '0.1.0'
 
 def graphFreq(dataframe, column, agg, title):
     import matplotlib.pyplot as plt
@@ -6,6 +6,9 @@ def graphFreq(dataframe, column, agg, title):
     plt.title(title +' per '+agg)
     plt.xlabel(agg)
     plt.xlabel(title);
+
+def ola_enfermeira():
+    print(f'Teste de validação da biblioteca {__version__}')
 
 def checkNullVisual(dataFrame):
     import seaborn as sns
