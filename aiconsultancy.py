@@ -1,20 +1,23 @@
 __version__ = '0.1.0'
 
-def graphFreq(dataframe, column, agg, title):
+def getversion():
+    print(f'{__version__}')
+
+
+# Bibliotecas - Gráficas
+
+def gf_freq(dataframe, column, agg, title):
     import matplotlib.pyplot as plt
     dataframe[column].asfreq(agg).plot(linewidth=3)
     plt.title(title +' per '+agg)
     plt.xlabel(agg)
     plt.xlabel(title);
 
-def ola_enfermeira():
-    print(f'Teste de validação da biblioteca {__version__}')
-
-def checkNullVisual(dataFrame):
+def gf_nullvalues(dataFrame):
     import seaborn as sns
     sns.heatmap(dataFrame.isnull())
 
-def epochHistoryGraph(epochhist):
+def gf_epochhistory(epochhist):
     import matplotlib.pyplot as plt
     plt.plot(epochhist.history['loss'])
     plt.plot(epochhist.history['val_loss'])
@@ -23,7 +26,30 @@ def epochHistoryGraph(epochhist):
     plt.ylabel('Training and Validation Loss')
     plt.legend(['Training Loss', 'Validation Loss' ])
 
-def regressionEvaluation(y_test, y_predict, X_test):
+def gf_bubblechart(df, x, y):
+    import plotly.express as px
+    df_sorted = df = df.sort_values(y, ascending = False)
+    fig = px.scatter(
+        df, y=y, x=x, color='Exports', size='Exports', size_max=20,
+        color_continuous_scale = px.color.sequential.RbBu,
+    )
+    fig.update_layout(
+        paper_bg_color='white',
+        plot_bgcolor='white'
+    )
+    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='LightGray')
+    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='LightGray')
+    fig.update_layout(height=500, width=1000)
+    fig.update_coloraxes(colorbar=dict(title='Exports'))
+    fig.update_traces(marker=dict(sizeref=0.09))
+    fig.update_yaxes(title=y)
+    fig.update_xaxes(title=x)
+    fig.update_layout(showlegend=False)
+    fig.show()
+
+# Bibliotecas - Machine Learning
+
+def ml_regressionevaluation(y_test, y_predict, X_test):
     from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
     from math import sqrt
     mae = mean_absolute_error(y_test, y_predict)
@@ -39,7 +65,10 @@ def regressionEvaluation(y_test, y_predict, X_test):
     print('R2:', r2)
     print('R2 Ajustado:', adj_r2)
 
-def get_model_memory_usage(batch_size, model):
+
+# Bibliotecas - Tensorflow
+
+def tf_getModelMemoryUsage(batch_size, model):
     
     features_mem = 0 # Initialize memory for features. 
     float_bytes = 4.0 #Multiplication factor as all values we store would be float32.
@@ -66,5 +95,3 @@ def get_model_memory_usage(batch_size, model):
         print("Memory for", out_shape, " layer in MB is:", single_layer_mem_MB)
         features_mem += single_layer_mem_MB  #Add to total feature memory count
 
-def bubblechart(df):
-    df_sorted = df = df.sort_values("Country", ascending = False)
