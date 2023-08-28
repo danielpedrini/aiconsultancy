@@ -1,4 +1,4 @@
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 
 def getversion():
     print(f'{__version__}')
@@ -97,10 +97,12 @@ def tf_getModelMemoryUsage(batch_size, model):
 
 # Image processing
 
-def img_filtering(img, filter):
+def img_filtering(img_path, filter):
     import cv2
     import numpy as np
     
+    img = cv2.imread(img_path, 1)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     identity = np.array(([0, 0, 0],[0, 1, 0], [0, 0, 0]), np.float32)
     edge_1 = np.array(([0, -1, 0],[-1, 4, -1],[0, -1, 0]), np.float32)
     edge_2 = np.array(([-1, -1, -1],[-1, 8, -1],[-1, -1, -1]), np.float32)
